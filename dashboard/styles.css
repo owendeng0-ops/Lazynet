@@ -282,6 +282,27 @@ h2 {
   margin-bottom: 6px;
 }
 
+.node-current {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.node-current span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.node-current strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 17px;
+}
+
 .module-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

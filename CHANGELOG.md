@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4 - 2026-06-30
+
+- Add current-node monitoring for the configured Mihomo proxy group.
+- Show node health on the dashboard with GitHub, Netflix, and ChatGPT probes.
+- Add `scripts/node-monitor.sh` for OpenWrt-side node checks.
+
 ## 1.0.3 - 2026-06-30
 
 - Replace the placeholder dashboard with a live operations dashboard.

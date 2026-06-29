@@ -33,6 +33,15 @@ const fallbackStatus = {
     { name: "Netflix", result: "waiting", state: "warn" },
     { name: "ChatGPT", result: "waiting", state: "warn" }
   ],
+  node: {
+    current: "unknown",
+    updatedAt: "not checked",
+    checks: [
+      { name: "GitHub", result: "waiting", state: "warn" },
+      { name: "Netflix", result: "waiting", state: "warn" },
+      { name: "ChatGPT", result: "waiting", state: "warn" }
+    ]
+  },
   rules: [
     { name: "AI", count: 7, target: "Proxy" },
     { name: "GitHub", count: 5, target: "Proxy" },
@@ -195,6 +204,9 @@ loadStatus().then((status) => {
   renderPorts(status.ports || fallbackStatus.ports);
   renderRows("dns-checks", status.dns || fallbackStatus.dns);
   renderRows("proxy-checks", status.proxy || fallbackStatus.proxy);
+  setText("node-current", status.node?.current || "unknown");
+  setText("node-updated", status.node?.updatedAt || "not checked");
+  renderRows("node-checks", status.node?.checks || fallbackStatus.node.checks);
   renderRules(status);
   renderRows("outputs", status.outputs || fallbackStatus.outputs);
   renderModules(status.modules || fallbackStatus.modules);

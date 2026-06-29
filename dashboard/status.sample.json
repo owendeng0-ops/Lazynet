@@ -37,6 +37,15 @@
     { "name": "Netflix", "result": "http=302 connect=200", "state": "ok" },
     { "name": "ChatGPT", "result": "http=403 connect=200", "state": "ok" }
   ],
+  "node": {
+    "current": "Hong Kong 01",
+    "updatedAt": "2026-06-30T00:00:00+08:00",
+    "checks": [
+      { "name": "GitHub", "result": "http=200 connect=200 time=1.0", "state": "ok" },
+      { "name": "Netflix", "result": "http=302 connect=200 time=1.2", "state": "ok" },
+      { "name": "ChatGPT", "result": "http=403 connect=200 time=0.8", "state": "ok" }
+    ]
+  },
   "scope": {
     "label": "Scoped client",
     "value": "192.168.3.50"
