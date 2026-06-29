@@ -7,6 +7,8 @@ REPO_ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
 
 . "$REPO_ROOT/scripts/lib/version.sh"
 
+INPUT_MIHOMO_OUTPUT="${MIHOMO_OUTPUT:-}"
+
 ENV_FILE="${LAZYNET_ENV:-/etc/lazynet/lazynet.env}"
 if [ -f "$ENV_FILE" ]; then
 	. "$ENV_FILE"
@@ -14,6 +16,8 @@ fi
 
 LAZYNET_RUNTIME_DIR="${LAZYNET_RUNTIME_DIR:-$REPO_ROOT/tmp}"
 MIHOMO_OUTPUT="${MIHOMO_OUTPUT:-$REPO_ROOT/configs/mihomo/generated/lazynet.mihomo.yaml}"
+[ -n "$INPUT_MIHOMO_OUTPUT" ] && MIHOMO_OUTPUT="$INPUT_MIHOMO_OUTPUT"
+MIHOMO_BASE_CONFIG="${MIHOMO_BASE_CONFIG:-/etc/openclash/config/jsysubtoken.yaml}"
 MIHOMO_PRIVATE_PROVIDERS="${MIHOMO_PRIVATE_PROVIDERS:-/etc/lazynet/mihomo/private-providers.yaml}"
 
 MIHOMO_MIXED_PORT="${MIHOMO_MIXED_PORT:-7890}"
@@ -69,6 +73,25 @@ emit_nameserver_policy() {
 	done < "$file"
 }
 
+emit_base_config_body() {
+	base_config="$1"
+
+	[ -f "$base_config" ] || return 0
+	awk '
+		function top_level(line) {
+			return line ~ /^[^[:space:]#][^:]*:/
+		}
+		function skip_key(line) {
+			return line ~ /^(port|socks-port|mixed-port|redir-port|tproxy-port|allow-lan|mode|log-level|external-controller|secret|dns|rules):/
+		}
+		top_level($0) {
+			skip = skip_key($0)
+		}
+		skip { next }
+		{ print }
+	' "$base_config"
+}
+
 {
 	lazynet_metadata_comments
 	printf '\n'
@@ -86,6 +109,8 @@ emit_nameserver_policy() {
 	printf '  default-nameserver: [192.168.3.1, 223.5.5.5, 119.29.29.29]\n'
 	printf '  nameserver: [192.168.3.1, 223.5.5.5, 119.29.29.29]\n'
 	printf '  fallback: [1.1.1.1, 8.8.8.8]\n'
+	printf '  fallback-filter:\n'
+	printf '    geoip: false\n'
 	printf '  nameserver-policy:\n'
 	emit_nameserver_policy "$REPO_ROOT/rules/game/playstation.direct.domains" "192.168.3.1"
 	printf '  fake-ip-filter:\n'
@@ -95,6 +120,10 @@ emit_nameserver_policy() {
 	if [ -f "$MIHOMO_PRIVATE_PROVIDERS" ]; then
 		printf '# Private provider and proxy-group section starts here.\n'
 		cat "$MIHOMO_PRIVATE_PROVIDERS"
+		printf '\n'
+	elif [ -f "$MIHOMO_BASE_CONFIG" ]; then
+		printf '# Private provider and proxy-group section reused from MIHOMO_BASE_CONFIG.\n'
+		emit_base_config_body "$MIHOMO_BASE_CONFIG"
 		printf '\n'
 	else
 		printf '# No private provider file found. DIRECT-only fallback for local generation.\n'

@@ -112,6 +112,8 @@ vi /etc/lazynet/lazynet.env
 
 The installed service writes runtime config under `/tmp/lazynet/` and keeps private persistent files under `/etc/lazynet/`. Transparent proxy rules are scoped to `LAZYNET_CLIENT_IP`.
 
+If `MIHOMO_BASE_CONFIG` points to an existing private Mihomo or Clash config, LazyNet reuses its proxy and group definitions, then generates the OpenWrt runtime ports, DNS policy, and rules around it.
+
 ## Dashboard
 
 Open `dashboard/index.html` directly in a browser. When deployed with a web server, write live status to `dashboard/status.json`; otherwise the dashboard uses a safe built-in development status.

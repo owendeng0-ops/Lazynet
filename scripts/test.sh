@@ -53,6 +53,7 @@ pass "manifest"
 
 grep -q "DOMAIN-SUFFIX,playstation.net,DIRECT" "$TMP_DIR/lazynet.mihomo.yaml" || fail "PSN direct rule missing"
 grep -q "'+.playstation.net': 192.168.3.1" "$TMP_DIR/lazynet.mihomo.yaml" || fail "PSN real-IP DNS policy missing"
+grep -q "geoip: false" "$TMP_DIR/lazynet.mihomo.yaml" || fail "DNS fallback GeoIP should be disabled"
 grep -q "DOMAIN-SUFFIX,netflix.com" "$TMP_DIR/lazynet.mihomo.yaml" || fail "Netflix rule missing"
 pass "routing rules"
 

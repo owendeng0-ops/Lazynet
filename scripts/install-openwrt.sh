@@ -25,6 +25,13 @@ copy_dir "$REPO_ROOT/rules" "$APP_DIR/rules"
 copy_dir "$REPO_ROOT/scripts" "$APP_DIR/scripts"
 cp "$REPO_ROOT/README.md" "$APP_DIR/README.md"
 cp "$REPO_ROOT/VERSION" "$APP_DIR/VERSION"
+if [ -f "$REPO_ROOT/REVISION" ]; then
+	cp "$REPO_ROOT/REVISION" "$APP_DIR/REVISION"
+elif command -v git >/dev/null 2>&1 && git -C "$REPO_ROOT" rev-parse --short HEAD >/dev/null 2>&1; then
+	git -C "$REPO_ROOT" rev-parse --short HEAD > "$APP_DIR/REVISION"
+else
+	echo "unknown" > "$APP_DIR/REVISION"
+fi
 
 if [ ! -f "$ENV_FILE" ]; then
 	cp "$REPO_ROOT/configs/lazynet.env.example" "$ENV_FILE"
@@ -41,4 +48,3 @@ chmod +x "$APP_DIR"/scripts/*.sh "$APP_DIR"/scripts/lib/*.sh
 echo "LazyNet installed to $APP_DIR"
 echo "Edit $ENV_FILE before enabling or starting the service."
 echo "Then run: /etc/init.d/lazynet enable && /etc/init.d/lazynet start"
-

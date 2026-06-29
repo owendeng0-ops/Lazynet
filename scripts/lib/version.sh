@@ -18,7 +18,11 @@ lazynet_version() {
 }
 
 lazynet_commit() {
-	if command -v git >/dev/null 2>&1 && git -C "$repo_root" rev-parse --short HEAD >/dev/null 2>&1; then
+	if [ -n "${LAZYNET_GIT_COMMIT:-}" ]; then
+		printf '%s\n' "$LAZYNET_GIT_COMMIT"
+	elif [ -f "$repo_root/REVISION" ]; then
+		sed -n '1p' "$repo_root/REVISION"
+	elif command -v git >/dev/null 2>&1 && git -C "$repo_root" rev-parse --short HEAD >/dev/null 2>&1; then
 		git -C "$repo_root" rev-parse --short HEAD
 	else
 		printf '%s\n' "unknown"
@@ -30,11 +34,7 @@ lazynet_generated_at() {
 }
 
 lazynet_rules_version() {
-	if command -v git >/dev/null 2>&1 && git -C "$repo_root" rev-parse --short HEAD >/dev/null 2>&1; then
-		git -C "$repo_root" rev-parse --short HEAD
-	else
-		lazynet_version
-	fi
+	lazynet_commit
 }
 
 lazynet_metadata_comments() {

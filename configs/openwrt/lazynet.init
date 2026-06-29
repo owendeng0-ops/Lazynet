@@ -12,6 +12,7 @@ CORE="${MIHOMO_CORE:-$WORK_DIR/mihomo}"
 CONFIG="${MIHOMO_OUTPUT:-$WORK_DIR/mihomo.yaml}"
 CORE_URL="${MIHOMO_CORE_URL:-https://github.com/MetaCubeX/mihomo/releases/download/v1.19.26/mihomo-linux-arm64-v1.19.26.gz}"
 FIREWALL="${LAZYNET_FIREWALL:-/usr/bin/lazynet-firewall}"
+STOP_CONFLICTING_SERVICES="${LAZYNET_STOP_CONFLICTING_SERVICES:-1}"
 
 load_env() {
 	[ -f "$ENV_FILE" ] && . "$ENV_FILE"
@@ -20,6 +21,17 @@ load_env() {
 	CONFIG="${MIHOMO_OUTPUT:-$WORK_DIR/mihomo.yaml}"
 	CORE_URL="${MIHOMO_CORE_URL:-$CORE_URL}"
 	FIREWALL="${LAZYNET_FIREWALL:-$FIREWALL}"
+	STOP_CONFLICTING_SERVICES="${LAZYNET_STOP_CONFLICTING_SERVICES:-$STOP_CONFLICTING_SERVICES}"
+}
+
+stop_conflicting_services() {
+	[ "$STOP_CONFLICTING_SERVICES" = "1" ] || return 0
+	if [ -x /etc/init.d/ps5clash ]; then
+		/etc/init.d/ps5clash stop >/tmp/lazynet-stop-ps5clash.log 2>&1 || true
+	fi
+	if [ -x /etc/init.d/openclash ]; then
+		/etc/init.d/openclash stop >/tmp/lazynet-stop-openclash.log 2>&1 || true
+	fi
 }
 
 ensure_core() {
@@ -43,6 +55,7 @@ generate_config() {
 
 start_service() {
 	load_env
+	stop_conflicting_services
 	ensure_core || return 1
 	generate_config || return 1
 	[ -x "$FIREWALL" ] && "$FIREWALL" add
@@ -64,4 +77,3 @@ restart() {
 	stop
 	start
 }
-

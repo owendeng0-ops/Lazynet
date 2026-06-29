@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2 - 2026-06-30
+
+- Reuse an existing private Mihomo base config on OpenWrt instead of falling back to DIRECT-only output.
+- Disable Mihomo DNS fallback GeoIP filtering to avoid MMDB downloads during router-side validation.
+- Stop conflicting OpenClash or ps5clash services before starting LazyNet.
+- Preserve generated config revision metadata after installing without a `.git` directory.
+
 ## 1.0.1 - 2026-06-29
 
 - Add a full local build pipeline for manifest, Mihomo, Shadowrocket, and Verge outputs.
