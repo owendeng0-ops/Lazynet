@@ -1,0 +1,22 @@
+# Local/private runtime files
+.env
+*.local
+*.secret
+secrets/
+
+# Generated client configs
+configs/mihomo/generated/*
+!configs/mihomo/generated/.gitkeep
+configs/shadowrocket/generated/*
+!configs/shadowrocket/generated/.gitkeep
+configs/verge/generated/*
+!configs/verge/generated/.gitkeep
+
+# Runtime output
+tmp/
+logs/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/

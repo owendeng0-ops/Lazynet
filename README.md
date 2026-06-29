@@ -1,0 +1,59 @@
+# LazyNet
+
+LazyNet is an OpenWrt-centered home network project. OpenWrt is the server, Mihomo is the policy engine, AdGuard Home is the DNS layer, and phone or desktop clients are generated outputs rather than the source of truth.
+
+## Principles
+
+1. OpenWrt is the server, not a client.
+2. YAML is generated output. Source rules live in `rules/`, scripts live in `scripts/`, and templates live in `configs/`.
+3. GitHub stores code only. Tokens, passwords, subscription URLs, API keys, and personal runtime state stay under `/etc/lazynet/`.
+4. Every feature is modular: Network, DNS, AI, Netflix, GitHub, Game, Monitor, and Notify can evolve independently.
+5. Every generated config carries version metadata: LazyNet version, generated time, rules version, and git commit.
+
+## Layout
+
+```text
+LazyNet/
+├── docs/
+├── configs/
+│   ├── mihomo/
+│   ├── shadowrocket/
+│   ├── verge/
+│   └── openwrt/
+├── rules/
+│   ├── ai/
+│   ├── game/
+│   ├── github/
+│   ├── media/
+│   ├── china/
+│   └── custom/
+├── scripts/
+├── dashboard/
+└── CHANGELOG.md
+```
+
+## First Target
+
+The first supported runtime target is OpenWrt with Mihomo. The current design keeps transparent proxying scoped to a configured client by default, which avoids turning every LAN device into an accidental test subject.
+
+## Local Secrets
+
+Create local files on OpenWrt, not in this repository:
+
+```text
+/etc/lazynet/lazynet.env
+/etc/lazynet/mihomo/private-providers.yaml
+/etc/lazynet/mihomo/subscription.yaml
+```
+
+Use `configs/lazynet.env.example` as the starting point.
+
+## Generate Mihomo
+
+```sh
+cp configs/lazynet.env.example /etc/lazynet/lazynet.env
+scripts/generate-mihomo.sh
+```
+
+Generated files are written to `configs/mihomo/generated/` by default and are ignored by git.
+
