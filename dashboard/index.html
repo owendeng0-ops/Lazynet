@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LazyNet Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">OpenWrt Home Network</p>
+        <h1>LazyNet</h1>
+      </div>
+      <div class="status-pill" id="overall-status">Checking</div>
+    </header>
+
+    <section class="summary-grid" aria-label="LazyNet summary">
+      <article>
+        <span>Version</span>
+        <strong id="version">unknown</strong>
+      </article>
+      <article>
+        <span>Generated</span>
+        <strong id="generated-at">unknown</strong>
+      </article>
+      <article>
+        <span>Rules</span>
+        <strong id="rules-version">unknown</strong>
+      </article>
+      <article>
+        <span>Commit</span>
+        <strong id="git-commit">unknown</strong>
+      </article>
+    </section>
+
+    <section class="modules" aria-label="Modules">
+      <div class="section-title">
+        <h2>Modules</h2>
+        <p>DNS, routing, client output, and OpenWrt runtime status.</p>
+      </div>
+      <div class="module-grid" id="modules"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

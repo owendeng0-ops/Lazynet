@@ -2,7 +2,7 @@
 
 *.sh text eol=lf
 *.domains text eol=lf
+*.init text eol=lf
 VERSION text eol=lf
 .gitignore text eol=lf
 .gitattributes text eol=lf
-

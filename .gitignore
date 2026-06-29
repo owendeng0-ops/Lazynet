@@ -7,12 +7,15 @@ secrets/
 # Generated client configs
 configs/mihomo/generated/*
 !configs/mihomo/generated/.gitkeep
+configs/manifest/generated/*
+!configs/manifest/generated/.gitkeep
 configs/shadowrocket/generated/*
 !configs/shadowrocket/generated/.gitkeep
 configs/verge/generated/*
 !configs/verge/generated/.gitkeep
 
 # Runtime output
+build/
 tmp/
 logs/
 

@@ -21,7 +21,8 @@ else
 	echo "mihomo core not found at $MIHOMO_CORE; skipped validation"
 fi
 
-if [ -x /etc/init.d/ps5clash ]; then
+if [ -x /etc/init.d/lazynet ]; then
+	/etc/init.d/lazynet restart
+elif [ -x /etc/init.d/ps5clash ]; then
 	/etc/init.d/ps5clash restart
 fi
-

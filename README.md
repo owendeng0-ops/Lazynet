@@ -77,3 +77,41 @@ scripts/generate-mihomo.sh
 ```
 
 Generated files are written to `configs/mihomo/generated/` by default and are ignored by git.
+
+## Build All Outputs
+
+```sh
+scripts/build.sh
+```
+
+This generates:
+
+- `configs/manifest/generated/lazynet.manifest.json`
+- `configs/mihomo/generated/lazynet.mihomo.yaml`
+- `configs/shadowrocket/generated/lazynet.shadowrocket.conf`
+- `configs/verge/generated/lazynet.verge.yaml`
+
+## Test
+
+```sh
+scripts/test.sh
+```
+
+The test suite checks shell syntax, generated metadata, manifest output, key routing rules, ignored generated files, and obvious committed secret patterns.
+
+## OpenWrt Install
+
+On OpenWrt, copy or clone this repository, then run:
+
+```sh
+scripts/install-openwrt.sh
+vi /etc/lazynet/lazynet.env
+/etc/init.d/lazynet enable
+/etc/init.d/lazynet start
+```
+
+The installed service writes runtime config under `/tmp/lazynet/` and keeps private persistent files under `/etc/lazynet/`. Transparent proxy rules are scoped to `LAZYNET_CLIENT_IP`.
+
+## Dashboard
+
+Open `dashboard/index.html` directly in a browser. When deployed with a web server, write live status to `dashboard/status.json`; otherwise the dashboard uses a safe built-in development status.

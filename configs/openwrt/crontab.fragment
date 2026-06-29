@@ -1,0 +1,6 @@
+# Optional LazyNet cron entries for OpenWrt.
+# Review before installing.
+
+*/5 * * * * /etc/lazynet/app/scripts/healthcheck.sh >/tmp/lazynet-healthcheck.log 2>&1 || /etc/init.d/lazynet restart
+23 4 * * 2 /etc/lazynet/app/scripts/update.sh >/tmp/lazynet-update.log 2>&1
+

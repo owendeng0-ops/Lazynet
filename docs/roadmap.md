@@ -7,6 +7,9 @@
 - Modular rules.
 - Config version metadata.
 - Healthcheck and update scripts.
+- Repeatable build and test commands.
+- Shadowrocket and Verge generated outputs.
+- Static dashboard shell.
 
 ## v1.1
 
@@ -25,4 +28,3 @@
 - Dashboard.
 - One-click update workflow.
 - Runtime status and historical config comparison.
-

@@ -1,0 +1,25 @@
+{
+  "name": "LazyNet",
+  "version": "1.0.0",
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "rulesVersion": "example",
+  "gitCommit": "example",
+  "modules": [
+    {
+      "name": "OpenWrt",
+      "state": "ready",
+      "detail": "Runtime service and scoped firewall templates are available."
+    },
+    {
+      "name": "Mihomo",
+      "state": "ready",
+      "detail": "Generated server config includes DNS, fake-IP, and routing metadata."
+    },
+    {
+      "name": "Clients",
+      "state": "ready",
+      "detail": "Shadowrocket and Verge outputs can be generated from source rules."
+    }
+  ]
+}
+
