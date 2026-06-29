@@ -2,6 +2,27 @@
 
 LazyNet is an OpenWrt-centered home network project. OpenWrt is the server, Mihomo is the policy engine, AdGuard Home is the DNS layer, and phone or desktop clients are generated outputs rather than the source of truth.
 
+## Background
+
+LazyNet started from a real home-network problem: keeping streaming, AI tools, GitHub, games, and daily devices stable without hand-editing fragile client configs every time something changes.
+
+The old pattern was scattered and easy to break. Android, Shadowrocket, Windows, OpenWrt, DNS rules, subscription files, and one-off scripts could all drift in different directions. When something worked yesterday and failed today, it was hard to answer what changed.
+
+LazyNet makes OpenWrt the stable center of the system. Rules, scripts, and templates live in git. Private subscriptions, tokens, passwords, and runtime state stay on the router under `/etc/lazynet/`. Generated YAML and client profiles are treated as build artifacts, not handwritten source.
+
+## Expected Outcome
+
+LazyNet should eventually make the home network:
+
+1. Recoverable: a fresh OpenWrt device can be rebuilt from documented steps and local private files.
+2. Observable: every generated config records LazyNet version, generation time, rules version, and git commit.
+3. Modular: DNS, AI, Netflix, GitHub, Game, Monitor, Notify, and client outputs can be changed independently.
+4. Safe: transparent proxying starts with a specific client or device, not the whole LAN by accident.
+5. Portable: Android, iPhone, Windows, Shadowrocket, Verge, and other clients are generated from the same source rules.
+6. Maintainable: fixes happen in `rules/`, `scripts/`, and `configs/`, then configs are regenerated.
+
+The long-term goal is a small home-network platform: one place to update, check, monitor, roll back, and regenerate network policy.
+
 ## Principles
 
 1. OpenWrt is the server, not a client.
@@ -14,22 +35,22 @@ LazyNet is an OpenWrt-centered home network project. OpenWrt is the server, Miho
 
 ```text
 LazyNet/
-├── docs/
-├── configs/
-│   ├── mihomo/
-│   ├── shadowrocket/
-│   ├── verge/
-│   └── openwrt/
-├── rules/
-│   ├── ai/
-│   ├── game/
-│   ├── github/
-│   ├── media/
-│   ├── china/
-│   └── custom/
-├── scripts/
-├── dashboard/
-└── CHANGELOG.md
++-- docs/
++-- configs/
+|   +-- mihomo/
+|   +-- shadowrocket/
+|   +-- verge/
+|   +-- openwrt/
++-- rules/
+|   +-- ai/
+|   +-- game/
+|   +-- github/
+|   +-- media/
+|   +-- china/
+|   +-- custom/
++-- scripts/
++-- dashboard/
++-- CHANGELOG.md
 ```
 
 ## First Target
@@ -56,4 +77,3 @@ scripts/generate-mihomo.sh
 ```
 
 Generated files are written to `configs/mihomo/generated/` by default and are ignored by git.
-
