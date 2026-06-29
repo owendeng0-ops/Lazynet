@@ -10,10 +10,13 @@
   <main class="shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">OpenWrt Home Network</p>
+        <p class="eyebrow">OpenWrt Control Plane</p>
         <h1>LazyNet</h1>
       </div>
-      <div class="status-pill" id="overall-status">Checking</div>
+      <div class="header-actions">
+        <time id="last-updated">--</time>
+        <div class="status-pill" id="overall-status">Checking</div>
+      </div>
     </header>
 
     <section class="summary-grid" aria-label="LazyNet summary">
@@ -35,10 +38,63 @@
       </article>
     </section>
 
+    <section class="ops-grid" aria-label="Runtime status">
+      <article class="panel span-2">
+        <div class="panel-head">
+          <h2>Runtime</h2>
+          <span id="runtime-host">--</span>
+        </div>
+        <div class="runtime-grid" id="runtime-grid"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Services</h2>
+        </div>
+        <div class="list" id="services"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Ports</h2>
+        </div>
+        <div class="port-grid" id="ports"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>DNS</h2>
+        </div>
+        <div class="list" id="dns-checks"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Proxy</h2>
+        </div>
+        <div class="list" id="proxy-checks"></div>
+      </article>
+
+      <article class="panel span-2">
+        <div class="panel-head">
+          <h2>Rules</h2>
+          <span id="scope-label">--</span>
+        </div>
+        <div class="rule-strip" id="rule-strip"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Outputs</h2>
+        </div>
+        <div class="list" id="outputs"></div>
+      </article>
+    </section>
+
     <section class="modules" aria-label="Modules">
       <div class="section-title">
         <h2>Modules</h2>
-        <p>DNS, routing, client output, and OpenWrt runtime status.</p>
+        <p id="module-summary">--</p>
       </div>
       <div class="module-grid" id="modules"></div>
     </section>
@@ -47,4 +103,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-

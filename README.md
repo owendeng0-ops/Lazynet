@@ -116,4 +116,4 @@ If `MIHOMO_BASE_CONFIG` points to an existing private Mihomo or Clash config, La
 
 ## Dashboard
 
-Open `dashboard/index.html` directly in a browser. When deployed with a web server, write live status to `dashboard/status.json`; otherwise the dashboard uses a safe built-in development status.
+Open `dashboard/index.html` directly in a browser or serve the repository root with any static web server. When `dashboard/status.json` exists, the dashboard shows live runtime data; otherwise it uses a safe built-in development status.

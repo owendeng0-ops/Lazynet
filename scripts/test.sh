@@ -51,6 +51,12 @@ grep -q '"gitCommit"' "$TMP_DIR/lazynet.manifest.json" || fail "manifest missing
 grep -q '"targets"' "$TMP_DIR/lazynet.manifest.json" || fail "manifest missing targets"
 pass "manifest"
 
+if command -v node >/dev/null 2>&1; then
+	node --check "$REPO_ROOT/dashboard/app.js" >/dev/null || fail "dashboard app syntax"
+	node -e "JSON.parse(require('fs').readFileSync(process.argv[1], 'utf8'))" "$REPO_ROOT/dashboard/status.sample.json" || fail "dashboard sample json"
+	pass "dashboard assets"
+fi
+
 grep -q "DOMAIN-SUFFIX,playstation.net,DIRECT" "$TMP_DIR/lazynet.mihomo.yaml" || fail "PSN direct rule missing"
 grep -q "'+.playstation.net': 192.168.3.1" "$TMP_DIR/lazynet.mihomo.yaml" || fail "PSN real-IP DNS policy missing"
 grep -q "geoip: false" "$TMP_DIR/lazynet.mihomo.yaml" || fail "DNS fallback GeoIP should be disabled"

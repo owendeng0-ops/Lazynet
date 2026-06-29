@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3 - 2026-06-30
+
+- Replace the placeholder dashboard with a live operations dashboard.
+- Add runtime, service, port, DNS, proxy, rule-scope, output, and module panels.
+- Make `dashboard/status.json` a local ignored runtime artifact.
+- Extend tests to validate dashboard JavaScript and sample status JSON.
+
 ## 1.0.2 - 2026-06-30
 
 - Reuse an existing private Mihomo base config on OpenWrt instead of falling back to DIRECT-only output.

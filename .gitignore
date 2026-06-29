@@ -18,6 +18,7 @@ configs/verge/generated/*
 build/
 tmp/
 logs/
+dashboard/status.json
 
 # OS/editor noise
 .DS_Store
