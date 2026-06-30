@@ -40,6 +40,13 @@
   "node": {
     "current": "Hong Kong 01",
     "updatedAt": "2026-06-30T00:00:00+08:00",
+    "exit": {
+      "ip": "155.254.105.67",
+      "city": "Hong Kong",
+      "region": "Hong Kong",
+      "country": "HK",
+      "org": "AS38136 Akari Networks"
+    },
     "checks": [
       { "name": "GitHub", "result": "http=200 connect=200 time=1.0", "state": "ok" },
       { "name": "Netflix", "result": "http=302 connect=200 time=1.2", "state": "ok" },

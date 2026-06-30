@@ -36,6 +36,7 @@ const fallbackStatus = {
   node: {
     current: "unknown",
     updatedAt: "not checked",
+    exit: { ip: "unknown", country: "unknown", city: "unknown" },
     checks: [
       { name: "GitHub", result: "waiting", state: "warn" },
       { name: "Netflix", result: "waiting", state: "warn" },
@@ -205,6 +206,8 @@ loadStatus().then((status) => {
   renderRows("dns-checks", status.dns || fallbackStatus.dns);
   renderRows("proxy-checks", status.proxy || fallbackStatus.proxy);
   setText("node-current", status.node?.current || "unknown");
+  const nodeExit = status.node?.exit;
+  setText("node-exit", nodeExit ? `${nodeExit.country || "--"} / ${nodeExit.city || "--"} / ${nodeExit.ip || "--"}` : "unknown");
   setText("node-updated", status.node?.updatedAt || "not checked");
   renderRows("node-checks", status.node?.checks || fallbackStatus.node.checks);
   renderRules(status);

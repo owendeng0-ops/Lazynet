@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.5 - 2026-06-30
+
+- Show real proxy exit IP, country, and city in node monitoring.
+- Clarify whether LazyNet/OpenWrt and local desktop Clash Verge are using different exits.
+
 ## 1.0.4 - 2026-06-30
 
 - Add current-node monitoring for the configured Mihomo proxy group.
