@@ -4,6 +4,7 @@
 
 - Localize the dashboard UI for Chinese daily use.
 - Translate runtime, service, port, node, rule, output, and module labels.
+- Translate service boot-state labels and inactive legacy service states.
 
 ## 1.0.5 - 2026-06-30
 
