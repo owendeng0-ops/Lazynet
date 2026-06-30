@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7 - 2026-06-30
+
+- Add a dashboard device access page for daily onboarding.
+- Show manual proxy endpoint, current transparent proxy device, and access checks.
+- Generate copyable OpenWrt commands for changing the transparent proxy client IP.
+
 ## 1.0.6 - 2026-06-30
 
 - Localize the dashboard UI for Chinese daily use.

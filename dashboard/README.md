@@ -12,5 +12,6 @@ The dashboard expects these status sections:
 - `dns`: key DNS behavior such as Netflix fake-IP and PlayStation real-IP.
 - `proxy`: outbound smoke checks.
 - `node`: current selected node and per-target node probes.
+- `scope`: current transparent proxy client shown on the device access page.
 - `rules`: source rule counts and routing targets.
 - `outputs`: generated config artifacts.

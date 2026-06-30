@@ -19,100 +19,185 @@
       </div>
     </header>
 
-    <section class="summary-grid" aria-label="LazyNet 摘要">
-      <article>
-        <span>平台版本</span>
-        <strong id="version">未知</strong>
-      </article>
-      <article>
-        <span>配置生成时间</span>
-        <strong id="generated-at">未知</strong>
-      </article>
-      <article>
-        <span>规则版本</span>
-        <strong id="rules-version">未知</strong>
-      </article>
-      <article>
-        <span>代码提交</span>
-        <strong id="git-commit">未知</strong>
-      </article>
+    <nav class="tabs" aria-label="控制台页面">
+      <button class="tab active" type="button" data-tab="overview">概览</button>
+      <button class="tab" type="button" data-tab="devices">接入设备</button>
+    </nav>
+
+    <section class="page-view active" id="overview-page">
+      <section class="summary-grid" aria-label="LazyNet 摘要">
+        <article>
+          <span>平台版本</span>
+          <strong id="version">未知</strong>
+        </article>
+        <article>
+          <span>配置生成时间</span>
+          <strong id="generated-at">未知</strong>
+        </article>
+        <article>
+          <span>规则版本</span>
+          <strong id="rules-version">未知</strong>
+        </article>
+        <article>
+          <span>代码提交</span>
+          <strong id="git-commit">未知</strong>
+        </article>
+      </section>
+
+      <section class="ops-grid" aria-label="运行状态">
+        <article class="panel span-2">
+          <div class="panel-head">
+            <h2>运行环境</h2>
+            <span id="runtime-host">--</span>
+          </div>
+          <div class="runtime-grid" id="runtime-grid"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>服务状态</h2>
+          </div>
+          <div class="list" id="services"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>端口</h2>
+          </div>
+          <div class="port-grid" id="ports"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>DNS</h2>
+          </div>
+          <div class="list" id="dns-checks"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>代理检测</h2>
+          </div>
+          <div class="list" id="proxy-checks"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>节点监控</h2>
+            <span id="node-updated">--</span>
+          </div>
+          <div class="node-current">
+            <span>当前节点</span>
+            <strong id="node-current">未知</strong>
+          </div>
+          <div class="node-current exit">
+            <span>真实出口</span>
+            <strong id="node-exit">未知</strong>
+          </div>
+          <div class="list node-checks" id="node-checks"></div>
+        </article>
+
+        <article class="panel span-2">
+          <div class="panel-head">
+            <h2>规则范围</h2>
+            <span id="scope-label">--</span>
+          </div>
+          <div class="rule-strip" id="rule-strip"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>生成配置</h2>
+          </div>
+          <div class="list" id="outputs"></div>
+        </article>
+      </section>
+
+      <section class="modules" aria-label="功能模块">
+        <div class="section-title">
+          <h2>模块</h2>
+          <p id="module-summary">--</p>
+        </div>
+        <div class="module-grid" id="modules"></div>
+      </section>
     </section>
 
-    <section class="ops-grid" aria-label="运行状态">
-      <article class="panel span-2">
-        <div class="panel-head">
-          <h2>运行环境</h2>
-          <span id="runtime-host">--</span>
-        </div>
-        <div class="runtime-grid" id="runtime-grid"></div>
-      </article>
+    <section class="page-view" id="devices-page" aria-label="接入设备">
+      <section class="device-grid">
+        <article class="panel span-2 access-card primary">
+          <div class="panel-head">
+            <h2>接入设备</h2>
+            <span id="access-router-state">--</span>
+          </div>
+          <div class="access-hero">
+            <div>
+              <span>LazyNet 接入点</span>
+              <strong id="access-endpoint">--</strong>
+            </div>
+            <div>
+              <span>当前透明代理</span>
+              <strong id="access-transparent-ip">--</strong>
+            </div>
+          </div>
+        </article>
 
-      <article class="panel">
-        <div class="panel-head">
-          <h2>服务状态</h2>
-        </div>
-        <div class="list" id="services"></div>
-      </article>
+        <article class="panel access-card">
+          <div class="panel-head">
+            <h2>手动代理</h2>
+            <em class="badge ok" id="manual-proxy-state">--</em>
+          </div>
+          <div class="device-facts">
+            <div><span>服务器</span><strong id="manual-proxy-host">--</strong></div>
+            <div><span>端口</span><strong id="manual-proxy-port">--</strong></div>
+            <div><span>类型</span><strong>HTTP / SOCKS5</strong></div>
+          </div>
+          <button class="copy-btn" type="button" data-copy="manual">复制代理参数</button>
+        </article>
 
-      <article class="panel">
-        <div class="panel-head">
-          <h2>端口</h2>
-        </div>
-        <div class="port-grid" id="ports"></div>
-      </article>
+        <article class="panel access-card">
+          <div class="panel-head">
+            <h2>透明代理</h2>
+            <em class="badge warn">单设备</em>
+          </div>
+          <label class="device-input">
+            <span>新设备 IP</span>
+            <input id="device-ip-input" inputmode="decimal" placeholder="192.168.3.60">
+          </label>
+          <div class="command-box" id="transparent-command">输入 IP 后生成 OpenWrt 命令</div>
+          <button class="copy-btn" type="button" data-copy="transparent">复制命令</button>
+        </article>
 
-      <article class="panel">
-        <div class="panel-head">
-          <h2>DNS</h2>
-        </div>
-        <div class="list" id="dns-checks"></div>
-      </article>
+        <article class="panel span-2 access-card">
+          <div class="panel-head">
+            <h2>接入方式</h2>
+            <span id="access-mode-summary">--</span>
+          </div>
+          <div class="mode-grid">
+            <div class="mode-card ok">
+              <span>手机 / 电脑</span>
+              <strong>手动代理</strong>
+              <p>最快接入，不改变路由器透明代理范围。</p>
+            </div>
+            <div class="mode-card warn">
+              <span>游戏机 / 电视</span>
+              <strong>透明代理</strong>
+              <p>适合不能装客户端的设备，当前版本一次接管一个 IP。</p>
+            </div>
+            <div class="mode-card ok">
+              <span>Shadowrocket / Verge</span>
+              <strong>生成配置</strong>
+              <p>配置文件已由 LazyNet 生成，后续会在这里提供下载入口。</p>
+            </div>
+          </div>
+        </article>
 
-      <article class="panel">
-        <div class="panel-head">
-          <h2>代理检测</h2>
-        </div>
-        <div class="list" id="proxy-checks"></div>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <h2>节点监控</h2>
-          <span id="node-updated">--</span>
-        </div>
-        <div class="node-current">
-          <span>当前节点</span>
-          <strong id="node-current">未知</strong>
-        </div>
-        <div class="node-current exit">
-          <span>真实出口</span>
-          <strong id="node-exit">未知</strong>
-        </div>
-        <div class="list node-checks" id="node-checks"></div>
-      </article>
-
-      <article class="panel span-2">
-        <div class="panel-head">
-          <h2>规则范围</h2>
-          <span id="scope-label">--</span>
-        </div>
-        <div class="rule-strip" id="rule-strip"></div>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <h2>生成配置</h2>
-        </div>
-        <div class="list" id="outputs"></div>
-      </article>
-    </section>
-
-    <section class="modules" aria-label="功能模块">
-      <div class="section-title">
-        <h2>模块</h2>
-        <p id="module-summary">--</p>
-      </div>
-      <div class="module-grid" id="modules"></div>
+        <article class="panel access-card">
+          <div class="panel-head">
+            <h2>接入检查</h2>
+          </div>
+          <div class="list" id="access-checks"></div>
+        </article>
+      </section>
     </section>
   </main>
 

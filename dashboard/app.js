@@ -95,6 +95,7 @@ const translations = {
   Manifest: "清单",
   Verge: "Clash Verge",
   Clients: "客户端",
+  "Scoped client": "透明代理设备",
   Proxy: "代理",
   DIRECT: "直连",
   "Proxy group": "代理组",
@@ -245,7 +246,115 @@ function renderModules(modules) {
   });
 }
 
+function getPort(ports, label, fallback) {
+  return (ports || []).find((port) => port.label === label)?.port || fallback;
+}
+
+function getTransparentIp(status) {
+  return status.scope?.value || status.runtime?.clientIp || fallbackStatus.scope.value;
+}
+
+function getRouterHost(status) {
+  return status.runtime?.host || fallbackStatus.runtime.host;
+}
+
+function isValidLanIp(value) {
+  if (!/^(\d{1,3}\.){3}\d{1,3}$/.test(value)) return false;
+  return value.split(".").every((part) => Number(part) >= 0 && Number(part) <= 255);
+}
+
+function transparentCommand(ip) {
+  return [
+    `grep -q '^LAZYNET_CLIENT_IP=' /etc/lazynet/lazynet.env && sed -i 's/^LAZYNET_CLIENT_IP=.*/LAZYNET_CLIENT_IP="${ip}"/' /etc/lazynet/lazynet.env || echo 'LAZYNET_CLIENT_IP="${ip}"' >> /etc/lazynet/lazynet.env`,
+    "/etc/init.d/lazynet restart"
+  ].join("\n");
+}
+
+function setCommand(status) {
+  const input = document.getElementById("device-ip-input");
+  const command = document.getElementById("transparent-command");
+  const value = input.value.trim();
+  const currentIp = getTransparentIp(status);
+  const ip = value || currentIp;
+
+  if (!isValidLanIp(ip)) {
+    command.textContent = "请输入正确的局域网 IP";
+    command.classList.add("warn");
+    return;
+  }
+
+  command.textContent = transparentCommand(ip);
+  command.classList.toggle("warn", ip === currentIp);
+}
+
+function setupCopyButtons(status) {
+  document.querySelectorAll("[data-copy]").forEach((button) => {
+    if (button.dataset.bound) return;
+    button.dataset.bound = "1";
+    button.addEventListener("click", async () => {
+      const router = getRouterHost(status);
+      const mixedPort = getPort(status.ports, "mixed", 7890);
+      const text = button.dataset.copy === "manual"
+        ? `代理服务器: ${router}\n代理端口: ${mixedPort}\n类型: HTTP / SOCKS5`
+        : document.getElementById("transparent-command").textContent;
+      await navigator.clipboard.writeText(text);
+      const original = button.textContent;
+      button.textContent = "已复制";
+      setTimeout(() => { button.textContent = original; }, 1200);
+    });
+  });
+}
+
+function renderAccess(status) {
+  const router = getRouterHost(status);
+  const mixedPort = getPort(status.ports, "mixed", 7890);
+  const currentIp = getTransparentIp(status);
+  const mixedOpen = (status.ports || []).find((port) => port.label === "mixed")?.open;
+  const hasNode = Boolean(status.node?.current && status.node.current !== "unknown");
+  const hasExit = Boolean(status.node?.exit?.ip && status.node.exit.ip !== "unknown");
+
+  setText("access-router-state", status.overall === "ok" ? "可接入" : "需检查");
+  setText("access-endpoint", `${router}:${mixedPort}`);
+  setText("access-transparent-ip", currentIp);
+  setText("manual-proxy-host", router);
+  setText("manual-proxy-port", mixedPort);
+  setText("access-mode-summary", `手动代理 ${router}:${mixedPort} / 透明代理 ${currentIp}`);
+
+  const manualState = document.getElementById("manual-proxy-state");
+  manualState.textContent = mixedOpen ? "可用" : "异常";
+  manualState.className = `badge ${stateClass(mixedOpen)}`;
+
+  const input = document.getElementById("device-ip-input");
+  input.placeholder = currentIp;
+  if (!input.dataset.bound) {
+    input.dataset.bound = "1";
+    input.addEventListener("input", () => setCommand(status));
+  }
+  setCommand(status);
+  setupCopyButtons(status);
+
+  renderRows("access-checks", [
+    { name: "LazyNet 服务", result: status.overall === "ok" ? "健康" : "需要检查", state: status.overall },
+    { name: "手动代理端口", result: `${router}:${mixedPort}`, state: mixedOpen },
+    { name: "当前节点", result: status.node?.current || "未知", state: hasNode ? "ok" : "warn" },
+    { name: "真实出口", result: status.node?.exit?.ip || "未知", state: hasExit ? "ok" : "warn" }
+  ]);
+}
+
+function initTabs() {
+  document.querySelectorAll(".tab").forEach((button) => {
+    if (button.dataset.bound) return;
+    button.dataset.bound = "1";
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab === button));
+      document.querySelectorAll(".page-view").forEach((page) => page.classList.remove("active"));
+      document.getElementById(`${button.dataset.tab}-page`).classList.add("active");
+    });
+  });
+}
+
 loadStatus().then((status) => {
+  initTabs();
   setText("version", status.version);
   setText("generated-at", status.generatedAt);
   setText("rules-version", status.rulesVersion);
@@ -264,6 +373,7 @@ loadStatus().then((status) => {
   renderRules(status);
   renderRows("outputs", status.outputs || fallbackStatus.outputs);
   renderModules(status.modules || fallbackStatus.modules);
+  renderAccess(status);
   setText("module-summary", `正在跟踪 ${(status.modules || fallbackStatus.modules).length} 个模块`);
 
   const overall = document.getElementById("overall-status");
