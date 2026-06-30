@@ -1,47 +1,47 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LazyNet Dashboard</title>
+  <title>LazyNet 控制台</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">OpenWrt Control Plane</p>
+        <p class="eyebrow">家庭网络控制台</p>
         <h1>LazyNet</h1>
       </div>
       <div class="header-actions">
         <time id="last-updated">--</time>
-        <div class="status-pill" id="overall-status">Checking</div>
+        <div class="status-pill" id="overall-status">检查中</div>
       </div>
     </header>
 
-    <section class="summary-grid" aria-label="LazyNet summary">
+    <section class="summary-grid" aria-label="LazyNet 摘要">
       <article>
-        <span>Version</span>
-        <strong id="version">unknown</strong>
+        <span>平台版本</span>
+        <strong id="version">未知</strong>
       </article>
       <article>
-        <span>Generated</span>
-        <strong id="generated-at">unknown</strong>
+        <span>配置生成时间</span>
+        <strong id="generated-at">未知</strong>
       </article>
       <article>
-        <span>Rules</span>
-        <strong id="rules-version">unknown</strong>
+        <span>规则版本</span>
+        <strong id="rules-version">未知</strong>
       </article>
       <article>
-        <span>Commit</span>
-        <strong id="git-commit">unknown</strong>
+        <span>代码提交</span>
+        <strong id="git-commit">未知</strong>
       </article>
     </section>
 
-    <section class="ops-grid" aria-label="Runtime status">
+    <section class="ops-grid" aria-label="运行状态">
       <article class="panel span-2">
         <div class="panel-head">
-          <h2>Runtime</h2>
+          <h2>运行环境</h2>
           <span id="runtime-host">--</span>
         </div>
         <div class="runtime-grid" id="runtime-grid"></div>
@@ -49,14 +49,14 @@
 
       <article class="panel">
         <div class="panel-head">
-          <h2>Services</h2>
+          <h2>服务状态</h2>
         </div>
         <div class="list" id="services"></div>
       </article>
 
       <article class="panel">
         <div class="panel-head">
-          <h2>Ports</h2>
+          <h2>端口</h2>
         </div>
         <div class="port-grid" id="ports"></div>
       </article>
@@ -70,30 +70,30 @@
 
       <article class="panel">
         <div class="panel-head">
-          <h2>Proxy</h2>
+          <h2>代理检测</h2>
         </div>
         <div class="list" id="proxy-checks"></div>
       </article>
 
       <article class="panel">
         <div class="panel-head">
-          <h2>Node</h2>
+          <h2>节点监控</h2>
           <span id="node-updated">--</span>
         </div>
         <div class="node-current">
-          <span>Current</span>
-          <strong id="node-current">unknown</strong>
+          <span>当前节点</span>
+          <strong id="node-current">未知</strong>
         </div>
         <div class="node-current exit">
-          <span>Exit</span>
-          <strong id="node-exit">unknown</strong>
+          <span>真实出口</span>
+          <strong id="node-exit">未知</strong>
         </div>
         <div class="list node-checks" id="node-checks"></div>
       </article>
 
       <article class="panel span-2">
         <div class="panel-head">
-          <h2>Rules</h2>
+          <h2>规则范围</h2>
           <span id="scope-label">--</span>
         </div>
         <div class="rule-strip" id="rule-strip"></div>
@@ -101,15 +101,15 @@
 
       <article class="panel">
         <div class="panel-head">
-          <h2>Outputs</h2>
+          <h2>生成配置</h2>
         </div>
         <div class="list" id="outputs"></div>
       </article>
     </section>
 
-    <section class="modules" aria-label="Modules">
+    <section class="modules" aria-label="功能模块">
       <div class="section-title">
-        <h2>Modules</h2>
+        <h2>模块</h2>
         <p id="module-summary">--</p>
       </div>
       <div class="module-grid" id="modules"></div>

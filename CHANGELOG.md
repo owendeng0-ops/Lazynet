@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.6 - 2026-06-30
+
+- Localize the dashboard UI for Chinese daily use.
+- Translate runtime, service, port, node, rule, output, and module labels.
+
 ## 1.0.5 - 2026-06-30
 
 - Show real proxy exit IP, country, and city in node monitoring.

@@ -1,6 +1,6 @@
 {
   "name": "LazyNet",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "generatedAt": "2026-06-30T00:00:00Z",
   "rulesVersion": "2c92aa4",
   "gitCommit": "2c92aa4",
@@ -18,9 +18,9 @@
     }
   },
   "services": [
-    { "name": "lazynet", "state": "running", "result": "enabled" },
-    { "name": "ps5clash", "state": "inactive", "result": "disabled" },
-    { "name": "openclash", "state": "inactive", "result": "disabled" }
+    { "name": "LazyNet 主服务", "state": "running", "result": "enabled" },
+    { "name": "旧 PS5Clash", "state": "inactive", "result": "disabled" },
+    { "name": "旧 OpenClash", "state": "inactive", "result": "disabled" }
   ],
   "ports": [
     { "port": 7890, "label": "mixed", "open": true },
@@ -64,31 +64,31 @@
     { "name": "PlayStation", "count": 6, "target": "DIRECT" }
   ],
   "outputs": [
-    { "name": "Manifest", "path": "configs/manifest/generated/lazynet.manifest.json", "state": "generated" },
+    { "name": "清单", "path": "configs/manifest/generated/lazynet.manifest.json", "state": "generated" },
     { "name": "Mihomo", "path": "configs/mihomo/generated/lazynet.mihomo.yaml", "state": "generated" },
     { "name": "Shadowrocket", "path": "configs/shadowrocket/generated/lazynet.shadowrocket.conf", "state": "generated" },
-    { "name": "Verge", "path": "configs/verge/generated/lazynet.verge.yaml", "state": "generated" }
+    { "name": "Clash Verge", "path": "configs/verge/generated/lazynet.verge.yaml", "state": "generated" }
   ],
   "modules": [
     {
       "name": "OpenWrt",
       "state": "ready",
-      "detail": "service, firewall, boot"
+      "detail": "服务、防火墙、开机启动"
     },
     {
       "name": "Mihomo",
       "state": "ready",
-      "detail": "mixed, redir, dns, api"
+      "detail": "混合端口、透明代理、DNS、API"
     },
     {
       "name": "DNS",
       "state": "ready",
-      "detail": "Netflix fake-IP, PSN real-IP"
+      "detail": "Netflix fake-IP，PSN real-IP"
     },
     {
-      "name": "Clients",
+      "name": "客户端",
       "state": "ready",
-      "detail": "Shadowrocket, Verge"
+      "detail": "Shadowrocket、Clash Verge"
     }
   ]
 }
