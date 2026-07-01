@@ -57,6 +57,16 @@ LazyNet/
 
 The first supported runtime target is OpenWrt with Mihomo. The current design keeps transparent proxying scoped to a configured client by default, which avoids turning every LAN device into an accidental test subject.
 
+## Project Management
+
+LazyNet is managed as a formal long-running project. Planning, backlog, operations, and release criteria live in docs instead of chat history:
+
+- `docs/project-management.md`: project charter, scope, milestones, workstreams, and definition of done.
+- `docs/backlog.md`: active backlog with Now, Next, Later, and Parking Lot sections.
+- `docs/runbook.md`: daily checks, device onboarding, deploy steps, and incident response.
+- `docs/release-checklist.md`: release verification checklist.
+- `docs/roadmap.md`: version-level roadmap.
+
 ## Local Secrets
 
 Create local files on OpenWrt, not in this repository:

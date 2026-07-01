@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add formal project management docs, backlog, runbook, release checklist, and GitHub templates.
+
 ## 1.0.7 - 2026-06-30
 
 - Add a dashboard device access page for daily onboarding.
